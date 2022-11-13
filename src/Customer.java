@@ -1,6 +1,9 @@
 import java.util.Enumeration;
 import java.util.Vector;
 
+/**
+ * класс, представляющий клиента магазина
+ */
 public class Customer {
     private String _name;
     private Vector<Rental> _rentals = new Vector<>();
@@ -24,7 +27,7 @@ public class Customer {
         while (rentals.hasMoreElements()) {
             Rental each = (Rental) rentals.nextElement();
             //определить сумму для каждой строки
-            double thisAmount = amountFor(each);
+            double thisAmount = each.getCharge();
             // добавить очки для активного арендатора
             frequentRenterPoints++;
             // бонус за аренду новинки на два дня
@@ -41,9 +44,5 @@ public class Customer {
         result += "Вы заработали " + String.valueOf(frequentRenterPoints) +
                 " очков за активность";
         return result;
-    }
-
-    private static double amountFor(Rental rental) {
-        return rental.getCharge();
     }
 }
