@@ -27,7 +27,6 @@ public class Customer {
         while (rentals.hasMoreElements()) {
             Rental each = (Rental) rentals.nextElement();
             //определить сумму для каждой строки
-            double thisAmount = each.getCharge();
             // добавить очки для активного арендатора
             frequentRenterPoints++;
             // бонус за аренду новинки на два дня
@@ -35,8 +34,8 @@ public class Customer {
                 frequentRenterPoints++;
             //показать результаты для этой аренды
             result += "\t" + each.getMovie().getTitle()+ "\t" +
-                    String.valueOf(thisAmount) + "\n";
-            totalAmount += thisAmount;
+                    String.valueOf(each.getCharge()) + "\n";
+            totalAmount += each.getCharge();
         }
         //добавить нижний колонтитул
         result += "Сумма задолженности составляет " +
