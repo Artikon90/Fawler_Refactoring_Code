@@ -20,24 +20,57 @@ public class Customer {
         return _name;
     }
     public String statement() {
-        double totalAmount = 0;
-        int frequentRenterPoints = 0;
         Enumeration<Rental> rentals = _rentals.elements();
         String result = "Учет аренды для " + getName() + "\n";
         while (rentals.hasMoreElements()) {
-            Rental each = (Rental) rentals.nextElement();
-            //определить сумму для каждой строки
-            frequentRenterPoints += each.getFrequentRenterPoints();
+            Rental each = rentals.nextElement();
             //показать результаты для этой аренды
             result += "\t" + each.getMovie().getTitle()+ "\t" +
                     String.valueOf(each.getCharge()) + "\n";
-            totalAmount += each.getCharge();
         }
         //добавить нижний колонтитул
         result += "Сумма задолженности составляет " +
-                String.valueOf(totalAmount) + "\n";
-        result += "Вы заработали " + String.valueOf(frequentRenterPoints) +
+                String.valueOf(getTotalCharge()) + "\n";
+        result += "Вы заработали " + String.valueOf(getTotalFrequentRenterPoints()) +
                 " очков за активность";
+        return result;
+    }
+
+    public String htmlStatement() {
+        Enumeration rentals = _rentals.elements();
+        String result = "<H1>Операции аренды для <EM>" + getName() +
+                "</EM></H1><P>\n";
+        while (rentals.hasMoreElements()) {
+            Rental each = (Rental) rentals.nextElement();
+            // показать результаты по каждой аренде
+            result += each.getMovie().getTitle()+ ": " +
+                    String.valueOf(each.getCharge()) + "<BR>\n";
+        }
+        //добавить нижний колонтитул
+        result += "<P>Ваша задолженность составляет <EM>" +
+                String.valueOf(getTotalCharge()) + "</EM><P>\n";
+        result += "На этой аренде вы заработали <EM>" +
+                String.valueOf(getTotalFrequentRenterPoints()) +
+                "</EM> очков за активность<P>";
+        return result;
+    }
+
+    private int getTotalFrequentRenterPoints() {
+        int result = 0;
+        Enumeration<Rental> rentals = _rentals.elements();
+        while (rentals.hasMoreElements()) {
+            Rental each = rentals.nextElement();
+            result += each.getFrequentRenterPoints();
+        }
+        return result;
+    }
+    private double getTotalCharge() {
+        double result = 0;
+        Enumeration<Rental> rentals = _rentals.elements();
+        while (rentals.hasMoreElements()) {
+            Rental each = rentals.nextElement();
+            result += each.getCharge();
+        }
         return result;
     }
 
